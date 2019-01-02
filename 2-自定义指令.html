@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body ng-app="myApp">
+    <div ng-hello-world></div>
+    <div class="ng-hello-world"></div>
+    <ng-hello-world></ng-hello-world>
+    <!-- 1.引包 -->
+    <script src="node_modules/angular/angular.js"></script>
+    <script>
+    // 2.创建模块
+    angular.module('myApp', [])
+        // directive("指令名",回调函数)就是是用来定义一个自定义指令的函数 注意回调函数里面也不能使用$scope
+        // 3.创建一个自定义指令
+        .directive('ngHelloWorld', function() {
+            // 4.在回调函数里面要有一个返回值 返回自定义指令的内容
+            return {
+                //5. 返回值是一个对象类型 里面可以设置很多属性
+                // a. template : '值' 可以指定一些HTML代码
+                // b. templateUrl : '值' 可以指定一个html文件
+                // c. restrict : '值' 可以指定自定义指令的使用方式 A 是属性 C 类名 E 元素标签 M 注释  写几个字母就有几种方式 可以都写上 默认值是A E    C,M 是要自己加 
+                // template: '<h1>hello world</h1> <h1>world hello </h1>'
+                // link: 回调函数 回调函数里面有3个参数 scope element attribute 只要在页面上使用了这个自定义指令 就会调用这个link的回调函数 link的回调函数里面一般会写一些DOM操作 实现自定义指令的功能
+                // scope 相当于 $scope
+                // element 指令所在的元素 是一个jqLite对象 里面封装好了类似jquery的属性方法
+                // attribute 属性 可以获取当前指令所在元素上的属性
+                templateUrl: 'helloworld.html',
+                restrict: 'ACE',
+                link: function(scope, element, attribute) {
+                    console.log(element);
+                    element.on('click', function() {
+                        console.log('自定义指令点击事件被调用');
+                    })
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

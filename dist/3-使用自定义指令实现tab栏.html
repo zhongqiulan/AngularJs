@@ -1,0 +1,36 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Document</title><style>ul li {
+        width: 100px;
+        height: 50px;
+        line-height: 50px;
+        float: left;
+        border: 1px solid #ccc;
+        background-color: hotpink;
+        text-align: center;
+        list-style: none;
+    }
+    
+    ul li a {
+        color: #000;
+        text-decoration: none;
+    }
+    
+    .active {
+        background-color: #0f0;
+    }</style></head><body ng-app="myApp"><ul><li ng-active class="active"><a href="#">首页</a></li><li ng-active><a href="#">正在热映</a></li><li ng-active><a href="#">即将上映</a></li><li ng-active><a href="#">top250</a></li></ul><script src="node_modules/angular/angular.js"></script><script>angular.module('myApp', [])
+        //3.创建一个自定义指令 ngActive
+        .directive('ngActive', function() {
+            //4.把自定义指令的代码返回回去
+            return {
+                //5.把JS代码写在link的回调函数里面
+                link: function(scope, element, attribute) {
+                    // 6. 给当前元素添加点击事件
+                    element.on('click', function() {
+                        //7. 把所有的li的active类名清空
+                        element.parent().find('li').removeClass('active');
+                        //8. 给当前的li加上active类名
+                        // 在事件里面 element就是指当前元素
+                        element.addClass('active');
+                    })
+                }
+            }
+        })</script></body></html>
